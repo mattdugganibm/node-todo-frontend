@@ -28,11 +28,6 @@ pipeline {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
       }
-      post {
-        always {
-            publishBuildToASM
-        }
-      }
     }
     stage('Deploy Image') {
       steps{
