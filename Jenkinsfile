@@ -52,7 +52,7 @@ pipeline {
                 dockerImage.push("${env.BUILD_NUMBER}")
                 dockerImage.push('latest')
              }
-             save_rc = sh(returnStatus: true, script: "docker save -o /tmp/${$registry}-${BUILD_NUMBER}.tar ${registry}:${BUILD_NUMBER}")
+             save_rc = sh(returnStatus: true, script: "docker save -o /tmp/${$env.registry}-${env.BUILD_NUMBER}.tar ${env.registry}:${env.BUILD_NUMBER}")
              echo "save_rc: $save_rc"
           }
           rtPublishBuildInfo (
