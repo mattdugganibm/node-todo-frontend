@@ -1,6 +1,6 @@
 def asm = ASM.newObserver()
 def buildInfo = Artifactory.newBuildInfo()
-buildInfo.env.capture = true
+buildInfo.env.collect()
 
 pipeline {
   environment {
@@ -20,11 +20,7 @@ pipeline {
                 url: "http://artifactory:8081/artifactory",
 		credentialsId: 'artifactory'
             )
-            rtBuildInfo (
-                buildName: currentBuild.fullProjectName,
-                    captureEnv: true
-            )
-	  }
+	 }
     }
     stage('Cloning Git') {
       steps {
