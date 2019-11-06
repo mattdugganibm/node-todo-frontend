@@ -61,18 +61,18 @@ pipeline {
           )
        }       
     }
-    stage('Remove Unused docker image') {
-      steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
-      }
-    }
+//    stage('Remove Unused docker image') {
+//      steps{
+//        sh "docker rmi $registry:$BUILD_NUMBER"
+//      }
+//    }
   }
   post {
         always {
             script {
               ASM.notifyASM asmObserver: asm, artModules: buildInfo.getModules()
             }
-	    deleteDir()
+	//    deleteDir()
         }
    }
 }
