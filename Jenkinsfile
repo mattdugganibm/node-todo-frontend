@@ -41,18 +41,16 @@ pipeline {
       }
     }
     stage('Deploy Image') {
-      steps{
+      steps {
          script {
             docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
+                dockerImage.push()
+             }
           }
-        }
-      }
-      steps {
           rtPublishBuildInfo (
               serverId: "artifactory"
           )
-      }        
+       }       
     }
     stage('Remove Unused docker image') {
       steps{
