@@ -61,7 +61,7 @@ pipeline {
               spec: '''{
 	          "files": [
                    {
-                      "pattern": "*.*",
+                      "pattern": "*.json",
                       "target": "generic-local/node-todo-frontend"
                    }
                  ]
