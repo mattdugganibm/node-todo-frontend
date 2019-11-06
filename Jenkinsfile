@@ -72,6 +72,7 @@ pipeline {
             script {
               ASM.notifyASM asmObserver: asm, artModules: buildInfo.getModules()
             }
+	    deleteDir()
         }
    }
 }
