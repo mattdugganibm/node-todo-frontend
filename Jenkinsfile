@@ -1,4 +1,4 @@
-def asm = ASM.newObserver
+def asm = ASM.newObserver()
 
 pipeline {
   environment {
