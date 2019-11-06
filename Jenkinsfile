@@ -25,6 +25,13 @@ pipeline {
             )
 	  }
     }
+    stage ('Config Build Info') {
+        steps {
+                rtBuildInfo (
+                    captureEnv: true
+                )
+        }
+     }
     stage('Cloning Git') {
       steps {
         git 'https://github.com/mattdugganibm/node-todo-frontend'
