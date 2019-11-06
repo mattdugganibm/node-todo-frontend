@@ -52,6 +52,8 @@ pipeline {
                 dockerImage.push("${env.BUILD_NUMBER}")
                 dockerImage.push('latest')
              }
+             save_rc = sh(returnStatus: true, script: "docker save -o /tmp/${dockerImage} ${dockerImage}")
+             echo "save_rc: $save_rc"
           }
           rtPublishBuildInfo (
               serverId: "artifactory"
@@ -61,7 +63,7 @@ pipeline {
               spec: '''{
 	          "files": [
                    {
-                      "pattern": "*.json",
+                      "pattern": "*.tar",
                       "target": "generic-local/node-todo-frontend"
                    }
                  ]
