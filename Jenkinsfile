@@ -1,5 +1,6 @@
 def asm = ASM.newObserver()
 def buildInfo = Artifactory.newBuildInfo()
+buildInfo.env.capture = true
 
 pipeline {
   environment {
@@ -65,7 +66,6 @@ pipeline {
                  ]
               }''', failNoOp: true
           )
-	  buildInfo.env.collect()
 	  rtPublishBuildInfo (
               serverId: "artifactory"
           )
