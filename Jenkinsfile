@@ -1,6 +1,5 @@
 def asm = ASM.newObserver()
 def buildInfo = Artifactory.newBuildInfo()
-buildInfo.env.collect()
 
 pipeline {
   environment {
@@ -55,9 +54,6 @@ pipeline {
              save_rc = sh(returnStatus: true, script: "docker save -o $WORKSPACE/$dockerImageSaveFile $registry:$BUILD_NUMBER")
              echo "save_rc: $save_rc"
           }
-          rtPublishBuildInfo (
-              serverId: "artifactory"
-          )
 	  rtUpload (
               serverId: 'artifactory',
               spec: '''{
@@ -68,6 +64,10 @@ pipeline {
 		   }
                  ]
               }''', failNoOp: true
+          )
+	  buildInfo.env.collect()
+	  rtPublishBuildInfo (
+              serverId: "artifactory"
           )
        }       
     }
