@@ -58,10 +58,9 @@ pipeline {
              save_rc = sh(returnStatus: true, script: "docker save -o $WORKSPACE/$dockerImageSaveFile $registry:$BUILD_NUMBER")
              echo "save_rc: $save_rc"
           }
-	  server = Artifactory.server "artifactory"
-          buildInfo.env.capture = true
-          buildInfo.env.collect()
-          server.publishBuildInfo buildInfo
+          rtPublishBuildInfo (
+              serverId: "artifactory"
+          )
 	  rtUpload (
               serverId: 'artifactory',
               spec: '''{
