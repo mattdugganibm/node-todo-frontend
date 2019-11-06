@@ -66,7 +66,8 @@ pipeline {
               spec: '''{
 	          "files": [
                    {
-                      "pattern": "*.tar"
+                      "pattern": "*.tar",
+		      "target":"generic-local/"
 		   }
                  ]
               }''', failNoOp: true
