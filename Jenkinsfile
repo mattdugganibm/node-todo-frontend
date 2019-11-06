@@ -42,6 +42,7 @@ pipeline {
       steps{
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
+	  echo "
         }
       }
     }
@@ -57,15 +58,18 @@ pipeline {
               serverId: "artifactory"
           )
 	  rtUpload (
-              serverId: "artifactory"
+              serverId: 'artifactory',
+              spec: '''{
+              }''', failNoOp: true
           )
        }       
     }
-//    stage('Remove Unused docker image') {
-//      steps{
-//        sh "docker rmi $registry:$BUILD_NUMBER"
-//      }
-//    }
+    stage('Remove Unused docker image') {
+      steps{
+	echo "Registry:Build = $registry:$BUILD_NUMBER"
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
   }
   post {
         always {
