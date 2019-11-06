@@ -48,6 +48,11 @@ pipeline {
           }
         }
       }
+      steps {
+          rtPublishBuildInfo (
+              serverId: "artifactory"
+          )
+      }        
     }
     stage('Remove Unused docker image') {
       steps{
