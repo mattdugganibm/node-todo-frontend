@@ -85,7 +85,7 @@ pipeline {
   post {
         always {
             script {
-              ASM.notifyASM asmObserver: asm, artModules: buildInfo.getArtifacts()
+              ASM.notifyASM asmObserver: asm, artModules: buildInfo.getModules()
             }
 	   // deleteDir()
         }
