@@ -17,6 +17,10 @@ pipeline {
                 url: "http://artifactory:8081/artifactory",
 		credentialsId: 'artifactory'
             )
+            rtBuildInfo (
+                buildName: currentBuild.fullProjectName,
+                    captureEnv: true
+            )
 	  }
     }
     stage('Cloning Git') {
