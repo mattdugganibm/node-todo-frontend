@@ -1,5 +1,11 @@
 def asm = ASM.newObserver()
 
+def buildContext = createBuildContext([
+  artRegion: 'na',
+  artPullRegion: 'na',
+  genericRepository: 'generic-local'
+])
+
 pipeline {
   environment {
     registry = "mattduggan/node-todo-frontend"
