@@ -66,9 +66,8 @@ pipeline {
               spec: '''{
 	          "files": [
                    {
-                      "pattern": "*.tar",
-                      "target": "generic-local/node-todo-frontend"
-                   }
+                      "pattern": "*.tar"
+		   }
                  ]
               }''', failNoOp: true
           )
@@ -87,7 +86,7 @@ pipeline {
             script {
               ASM.notifyASM asmObserver: asm, artModules: buildInfo.getModules()
             }
-	    deleteDir()
+	   // deleteDir()
         }
    }
 }
