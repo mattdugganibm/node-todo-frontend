@@ -73,6 +73,7 @@ pipeline {
       steps{
 	echo "Registry:Build = $registry:$BUILD_NUMBER"
         sh "docker rmi $registry:$BUILD_NUMBER"
+	sh "docker rmi $registry:latest"
       }
     }
   }
@@ -81,7 +82,7 @@ pipeline {
             script {
               ASM.notifyASM asmObserver: asm, artModules: buildInfo.getModules()
             }
-	//    deleteDir()
+	    deleteDir()
         }
    }
 }
