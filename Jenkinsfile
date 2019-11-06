@@ -1,10 +1,5 @@
 def asm = ASM.newObserver()
-
-def buildContext = createBuildContext([
-  artRegion: 'na',
-  artPullRegion: 'na',
-  genericRepository: 'generic-local'
-])
+def buildInfo = Artifactory.newBuildInfo()
 
 pipeline {
   environment {
@@ -67,7 +62,7 @@ pipeline {
   post {
         always {
             script {
-              ASM.notifyASM asmObserver: asm, artModules: buildContext.artBuildInfo.getModules()
+              ASM.notifyASM asmObserver: asm, artModules: buildInfo.getModules()
             }
         }
    }
