@@ -62,7 +62,7 @@ pipeline {
 	          "files": [
                    {
                       "pattern": "*.*",
-                      "target": "generic-local/node-todo-frontend/${BUILD_NUMBER}/"
+                      "target": "generic-local/node-todo-frontend/"
                    }
                  ]
               }''', failNoOp: true
