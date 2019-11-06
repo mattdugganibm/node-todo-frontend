@@ -1,3 +1,5 @@
+def asm = ASM.newObserver
+
 pipeline {
   environment {
     registry = "mattduggan/node-todo-frontend"
@@ -44,4 +46,11 @@ pipeline {
       }
     }
   }
+  post {
+        always {
+            script {
+              ASM.notifyASM asmObserver: asm
+            }
+        }
+   }
 }
