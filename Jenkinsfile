@@ -9,6 +9,15 @@ pipeline {
   agent any
   tools {nodejs "node" }
   stages {
+      stage ('Artifactory configuration') {
+          steps {
+		        // specify Artifactory server
+            rtServer (
+                id: "ARTIFACTORY_SERVER",
+                url: "http://artifactory:8081/artifactory",
+		            credentialsId: 'artifactory'
+            )
+     }
     stage('Cloning Git') {
       steps {
         git 'https://github.com/mattdugganibm/node-todo-frontend'
