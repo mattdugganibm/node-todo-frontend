@@ -1,8 +1,5 @@
 def asm = ASM.newObserver()
 def buildInfo = Artifactory.newBuildInfo()
-server.download spec: downloadSpec, buildInfo: buildInfo
-server.upload spec: uploadSpec, buildInfo: buildInfo
-server.publishBuildInfo buildInfo 
 
 pipeline {
   environment {
