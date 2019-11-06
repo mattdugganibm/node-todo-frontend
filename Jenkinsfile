@@ -25,13 +25,6 @@ pipeline {
             )
 	  }
     }
-    stage ('Config Build Info') {
-        steps {
-                rtBuildInfo (
-                    captureEnv: true
-                )
-        }
-     }
     stage('Cloning Git') {
       steps {
         git 'https://github.com/mattdugganibm/node-todo-frontend'
@@ -65,9 +58,10 @@ pipeline {
              save_rc = sh(returnStatus: true, script: "docker save -o $WORKSPACE/$dockerImageSaveFile $registry:$BUILD_NUMBER")
              echo "save_rc: $save_rc"
           }
-          rtPublishBuildInfo (
-              serverId: "artifactory"
-          )
+	  server = Artifactory.server "artifactory"
+          buildInfo.env.capture = true
+          buildInfo.env.collect()
+          server.publishBuildInfo buildInfo
 	  rtUpload (
               serverId: 'artifactory',
               spec: '''{
