@@ -59,6 +59,12 @@ pipeline {
 	  rtUpload (
               serverId: 'artifactory',
               spec: '''{
+	          "files": [
+                   {
+                      "pattern": "*.zip",
+                      "target": "generic-local/node-todo-frontend"
+                   }
+                 ]
               }''', failNoOp: true
           )
        }       
