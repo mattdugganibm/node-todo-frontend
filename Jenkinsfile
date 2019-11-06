@@ -50,6 +50,10 @@ pipeline {
           }
           rtPublishBuildInfo (
               serverId: "artifactory"
+	      captureEnv: true
+          )
+	  rtUpload (
+              serverId: "artifactory"
           )
        }       
     }
