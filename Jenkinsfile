@@ -61,7 +61,7 @@ pipeline {
   post {
         always {
             script {
-              ASM.notifyASM asmObserver: asm
+              ASM.notifyASM asmObserver: asm, artModules: buildContext.artBuildInfo.getModules()
             }
         }
    }
