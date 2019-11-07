@@ -4,7 +4,7 @@ buildInfo.env.capture = true
 def uploadSpec = """{
           "files": [
             {
-              "pattern": "*.tar.gz",
+              "pattern": "*.tgz",
               "target":"generic-local/node-todo-frontend/${BUILD_NUMBER}/"
             }
           ]
@@ -13,7 +13,7 @@ def uploadSpec = """{
 pipeline {
   environment {
     registry = "mattduggan/node-todo-frontend"
-    dockerImageSaveFile = "node-todo-frontend.tar.gz" 
+    dockerImageSaveFile = "node-todo-frontend.tgz" 
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
