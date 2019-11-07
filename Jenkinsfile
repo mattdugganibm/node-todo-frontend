@@ -67,11 +67,9 @@ pipeline {
        }       
     }
     stage('deploy to artifactory'){
-        steps{
-            def server = Artifactory.server 'artifactory'
-            server.upload spec: uploadSpec, buildInfo: buildInfo
-            server.publishBuildInfo buildInfo
-	}
+        def server = Artifactory.server 'artifactory'
+        server.upload spec: uploadSpec, buildInfo: buildInfo
+        server.publishBuildInfo buildInfo
     }
     stage('cleanup') {
       steps{
