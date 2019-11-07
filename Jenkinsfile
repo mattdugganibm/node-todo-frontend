@@ -68,7 +68,6 @@ pipeline {
     }
     stage('deploy to artifactory'){
         steps{
-	    buildInfo.setName "node-todo-frontend_artifactory"
             def server = Artifactory.server 'artifactory'
             server.upload spec: uploadSpec, buildInfo: buildInfo
             server.publishBuildInfo buildInfo
