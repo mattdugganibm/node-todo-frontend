@@ -1,6 +1,14 @@
 def asm = ASM.newObserver()
 def buildInfo = Artifactory.newBuildInfo()
 buildInfo.env.capture = true
+def uploadSpec = """{
+          "files": [
+            {
+              "pattern": "*.tar",
+              "target":"generic-local/node-todo-frontend/${BUILD_NUMBER}/"
+            }
+          ]
+        }"""
 
 pipeline {
   environment {
@@ -21,16 +29,6 @@ pipeline {
             )
 	 }
     }
-    stage('uploadSpec'){
-        def uploadSpec = """{
-          "files": [
-            {
-              "pattern": "*.tar",
-              "target":"generic-local/node-todo-frontend/${BUILD_NUMBER}/"
-            }
-          ]
-        }"""
-     }
     stage('cloneGit') {
       steps {
         git 'https://github.com/mattdugganibm/node-todo-frontend'
