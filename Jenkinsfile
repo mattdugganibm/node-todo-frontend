@@ -4,7 +4,7 @@ buildInfo.env.capture = true
 def uploadSpec = """{
           "files": [
             {
-              "pattern": "*.tar",
+              "pattern": "*.tar.gz",
               "target":"generic-local/node-todo-frontend/${BUILD_NUMBER}/"
             }
           ]
@@ -59,7 +59,7 @@ pipeline {
                 dockerImage.push("${env.BUILD_NUMBER}")
                 dockerImage.push('latest')
              }
-             save_rc = sh(returnStatus: true, script: "docker save -o $WORKSPACE/$dockerImageSaveFile $registry:$BUILD_NUMBER")
+             save_rc = sh(returnStatus: true, script: "docker save $registry:$BUILD_NUMBER | gzip > $WORKSPACE/$dockerImageSaveFile")
              echo "save_rc: $save_rc"
 	     sh('pwd')
              sh('ls -altr')
