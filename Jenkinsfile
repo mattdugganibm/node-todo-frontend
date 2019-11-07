@@ -13,7 +13,7 @@ def uploadSpec = """{
 pipeline {
   environment {
     registry = "mattduggan/node-todo-frontend"
-    dockerImageSaveFile = "node-todo-frontend.tar" 
+    dockerImageSaveFile = "node-todo-frontend.tar.gz" 
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
@@ -62,7 +62,7 @@ pipeline {
              save_rc = sh(returnStatus: true, script: "docker save $registry:$BUILD_NUMBER | gzip > $WORKSPACE/$dockerImageSaveFile")
              echo "save_rc: $save_rc"
 	     sh('pwd')
-             sh('ls -altr')
+             sh('ls -altrh')
           }
        }       
     }
