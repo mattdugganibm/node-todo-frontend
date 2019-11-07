@@ -12,7 +12,6 @@ pipeline {
   agent any
   tools {nodejs "node" }
   stages {
-	  
       stage ('Artifactory configuration') {
           steps {
             rtServer (
@@ -22,30 +21,40 @@ pipeline {
             )
 	 }
     }
-    stage('Cloning Git') {
+    stage('uploadSpec'){
+        def uploadSpec = """{
+          "files": [
+            {
+              "pattern": "*.tar",
+              "target":"generic-local/node-todo-frontend/${BUILD_NUMBER}/"
+            }
+          ]
+        }"""
+     }
+    stage('cloneGit') {
       steps {
         git 'https://github.com/mattdugganibm/node-todo-frontend'
       }
     }
-    stage('Build') {
+    stage('build npm') {
        steps {
 	 sh('printenv | sort')
          sh 'npm install'
        }
     }
-    stage('Test') {
+    stage('test') {
       steps {
         sh 'npm test'
       }
     }
-    stage('Building image') {
+    stage('build docker image') {
       steps{
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
       }
     }
-    stage('Deploy Image') {
+    stage('save docker image') {
       steps {
          script {
             docker.withRegistry( '', registryCredential ) {
@@ -54,24 +63,18 @@ pipeline {
              }
              save_rc = sh(returnStatus: true, script: "docker save -o $WORKSPACE/$dockerImageSaveFile $registry:$BUILD_NUMBER")
              echo "save_rc: $save_rc"
+	     sh('pwd')
+             sh('ls -altr')
           }
-	  rtUpload (
-              serverId: 'artifactory',
-              spec: '''{
-	          "files": [
-                   {
-                        "pattern": "*.tar",
-                        "target":"generic-local/node-todo-frontend/${BUILD_NUMBER}/"
-		   }
-                 ]
-              }''', failNoOp: true
-          )
-	  rtPublishBuildInfo (
-              serverId: "artifactory"
-          )
        }       
     }
-    stage('Remove Unused docker image') {
+    stage('deploy to artifactory'){
+        buildInfo.setName "node-todo-frontend_artifactory"
+        def server = Artifactory.server 'artifactory'
+        server.upload spec: uploadSpec, buildInfo: buildInfo
+        server.publishBuildInfo buildInfo
+    }
+    stage('cleanup') {
       steps{
 	echo "Registry:Build = $registry:$BUILD_NUMBER"
         sh "docker rmi $registry:$BUILD_NUMBER"
