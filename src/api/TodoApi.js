@@ -11,7 +11,7 @@ class TodoApi {
 	}
 
 	getList(filter) {
-		return new Promise( (resolve, reject) => {
+		areturn new Promise( (resolve, reject) => {
 			request.get(this.todoRequestOptions.getRequestOption(filter),
 				(error, response, body) => { error ? reject(error) : resolve(body, response) }
 			)
