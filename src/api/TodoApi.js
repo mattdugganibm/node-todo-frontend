@@ -6,7 +6,6 @@ const TodoRequestOptions = require('./TodoRequestOptions')
 class TodoApi {
 
 	constructor(todoRequestOptions) {
-		
 		this.todoRequestOptions = todoRequestOptions ? todoRequestOptions : new TodoRequestOptions();
 	}
 
