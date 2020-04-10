@@ -5,7 +5,7 @@ def uploadSpec = """{
           "files": [
             {
               "pattern": "*.tgz",
-              "target":"generic-local/node-todo-frontend/${BUILD_NUMBER}/"
+              "target":"example-repo-local/node-todo-frontend/${BUILD_NUMBER}/"
             }
           ]
         }"""
